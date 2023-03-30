@@ -1,3 +1,5 @@
+import random
+
 def left_case_string(s):
     pass
 
@@ -19,9 +21,15 @@ def edit():
     pass
 
 def test():
-    #pass
-    print(words_on_page)
-    print(eng_rus)
+    if eng_rus == [[], []]:
+        print('Sorry. Dictionary is empty.')
+    else:
+        print("That's all right")
+        while True:
+            n = random.randint(0, count_words-1)
+            print(eng_rus[0][n])
+            if input('Would you like to finish press "q", otherwise press any key: ') =='q' :
+                break
 
 def main_dict():
 
@@ -42,10 +50,12 @@ def main_dict():
         return wp
 
     global eng_rus
+    global count_words
     global words_on_page
     words_on_page = load_settings('settings.txt')
 
     dict_file = open('dict.txt',  'r', encoding='utf8')
+
     #try
     #reset(f);
     #except
@@ -61,6 +71,9 @@ def main_dict():
         eng.append(temp_list[0])
         rus.append(temp_list[1].strip())
     eng_rus = [eng, rus]
+    count_words = len(eng)
+    dict_file.close
+
     print('Hello! I am program dictionary!')
     while True:
         print('Please select command')
@@ -71,7 +84,6 @@ def main_dict():
         elif ch == 's': edit_settings()
         else: print('Wrong command! Repeat please.')
     print('Goodbye!')
-    #close(f);
 
 
 
