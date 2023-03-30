@@ -4,8 +4,7 @@ def left_case_string(s):
 def edit_settings():
     pass
 
-def load_settings():
-    pass
+
 
 def navigate_page():
     pass
@@ -20,21 +19,48 @@ def edit():
     pass
 
 def test():
-    pass
+    #pass
+    print(words_on_page)
+    print(eng_rus)
 
 def main_dict():
-    load_settings()
-    #assign (f,pass);
+
+    def load_settings(path):
+        wp = '5'
+        try:
+            f = open(path, 'r', encoding='utf8')
+            try:
+                wp = int(f.readline())
+            except:
+                f.close
+                f = open(path, 'w', encoding='utf8')
+                f.write(wp)
+        except:
+            f = open(path, 'w', encoding='utf8')
+            f.write(wp)
+        f.close
+        return wp
+
+    global eng_rus
+    global words_on_page
+    words_on_page = load_settings('settings.txt')
+
+    dict_file = open('dict.txt',  'r', encoding='utf8')
     #try
     #reset(f);
     #except
     #rewrite(f);
     #end;
-    #while not(eof(f)) do
-    #begin
-    #read (f,item);
-    #count+=1;
-    #end;
+    eng = []
+    rus = []
+    while True:
+        item = dict_file.readline()
+        if item == '':
+            break
+        temp_list = item.split(';')
+        eng.append(temp_list[0])
+        rus.append(temp_list[1].strip())
+    eng_rus = [eng, rus]
     print('Hello! I am program dictionary!')
     while True:
         print('Please select command')
