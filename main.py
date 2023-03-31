@@ -1,12 +1,13 @@
 import random
 
+def is_quit(promt = ''):
+    return input(promt) in ['Q', 'q', 'Й', 'й']
+
 def left_case_string(s):
     pass
 
 def edit_settings():
     pass
-
-
 
 def navigate_page():
     pass
@@ -24,11 +25,23 @@ def test():
     if eng_rus == [[], []]:
         print('Sorry. Dictionary is empty.')
     else:
-        print("That's all right")
+        number_list = []
+        for i in range(count_words):
+            number_list.append(i)
         while True:
             n = random.randint(0, count_words-1)
-            print(eng_rus[0][n])
-            if input('Would you like to finish press "q", otherwise press any key: ') =='q' :
+            if n in number_list:
+                if input('Please translate '+eng_rus[0][n]+' ') == eng_rus[1][n]:
+                    print('You are right!')
+                else:
+                    print('No, you are wrong')
+            else:
+                if number_list == []:
+                    print('Testing finished')
+                    break
+                continue
+            number_list.remove(n)
+            if is_quit('Would you like to finish press "q", otherwise press any key: ') :
                 break
 
 def main_dict():
@@ -77,11 +90,12 @@ def main_dict():
     print('Hello! I am program dictionary!')
     while True:
         print('Please select command')
-        ch = input('q- quite work, e- edit, t- test, s- settings.\n')
-        if ch == 'q': break
-        elif ch == 'e': edit()
-        elif ch == 't': test()
-        elif ch == 's': edit_settings()
+        ch = input('q- quite work, e- edit, t- test, s- settings.\n').upper()
+        print (ch)
+        if ch in ['Q', 'Й']: break
+        elif ch == 'E': edit()
+        elif ch == 'T': test()
+        elif ch == 'S': edit_settings()
         else: print('Wrong command! Repeat please.')
     print('Goodbye!')
 
