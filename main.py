@@ -25,16 +25,29 @@ def test():
     if eng_rus == [[], []]:
         print('Sorry. Dictionary is empty.')
     else:
+        a = 0
+        b = 1
+        test_mode = input('Please choose test mod. If you want to translate words from English to Russian then press "e", otherwise press "r": ').upper()
+        if test_mode in ['E', 'У']:
+            # translate from english to russian
+            a = 0
+            b = 1
+        elif test_mode in ['R', 'К']:
+            # translate from russian to engish
+            a = 1
+            b = 0
+        else:
+            print('Wrong command! Сontinue with the standard setting: translation from English to Russian')
         number_list = []
         for i in range(count_words):
             number_list.append(i)
         while True:
-            n = random.randint(0, count_words-1)
+            n = random.randint(a, count_words-1)
             if n in number_list:
-                if input('Please translate '+eng_rus[0][n]+' ') == eng_rus[1][n]:
+                if input('Please translate '+eng_rus[a][n]+' ') == eng_rus[b][n]:
                     print('You are right!')
                 else:
-                    print('No, you are wrong')
+                    print('No, you are wrong. Correct variant: "'+eng_rus[b][n]+'"')
             else:
                 if number_list == []:
                     print('Testing finished')
@@ -91,7 +104,6 @@ def main_dict():
     while True:
         print('Please select command')
         ch = input('q- quite work, e- edit, t- test, s- settings.\n').upper()
-        print (ch)
         if ch in ['Q', 'Й']: break
         elif ch == 'E': edit()
         elif ch == 'T': test()
