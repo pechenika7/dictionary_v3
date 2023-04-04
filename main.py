@@ -1,6 +1,6 @@
 import random
 
-def is_quit(promt = ''):
+def is_quit(promt=''):
     return input(promt) in ['Q', 'q', 'Й', 'й']
 
 def left_case_string(s):
@@ -22,22 +22,32 @@ def edit():
     pass
 
 def test():
+
+    def test_mode():
+        a = 0
+        b = 0
+        while True:
+            tm = input(
+                'Please choose test mod. If you want to translate words from English to Russian then press "e", otherwise press "r": ').upper()
+            if tm in ['E', 'У']:
+                # translate from english to russian
+                a = 0
+                b = 1
+                break
+            elif tm in ['R', 'К']:
+                # translate from russian to engish
+                a = 1
+                b = 0
+                break
+            else:
+                print('Wrong command! Repeat please.')
+        return a, b
+
+
     if eng_rus == [[], []]:
         print('Sorry. Dictionary is empty.')
     else:
-        a = 0
-        b = 1
-        test_mode = input('Please choose test mod. If you want to translate words from English to Russian then press "e", otherwise press "r": ').upper()
-        if test_mode in ['E', 'У']:
-            # translate from english to russian
-            a = 0
-            b = 1
-        elif test_mode in ['R', 'К']:
-            # translate from russian to engish
-            a = 1
-            b = 0
-        else:
-            print('Wrong command! Сontinue with the standard setting: translation from English to Russian')
+        a, b = test_mode()
         number_list = []
         for i in range(count_words):
             number_list.append(i)
@@ -54,8 +64,11 @@ def test():
                     break
                 continue
             number_list.remove(n)
-            if is_quit('Would you like to finish press "q", otherwise press any key: ') :
+            if is_quit('Would you like to finish press "q", otherwise press any key: '):
                 break
+
+
+
 
 def main_dict():
 
