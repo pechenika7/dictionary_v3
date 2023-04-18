@@ -48,7 +48,6 @@ def edit_word():
 
 def edit():
     pass
-
 def translete():
     a, b = test_mode('Please select translation direction: eng-рус(press 1), рус-eng(press 2) ')
     query = input('Please type your word').lower()
