@@ -29,15 +29,26 @@ def edit_settings():
     pass
 
 def list_words():
-    remainder = 0
-    if count_words % words_on_page != 0:
-        remainder = 1
-    pages = count_words / words_on_page + remainder
-    print('Dictionary contains ',coun_wtrds, ' words, ', words_on_page, ' item on the page, current page is 1 of', pages)
+    reminder = count_words % words_on_page
+    pages = count_words // words_on_page
+    if reminder > 0:
+        pages += 1
+    if count_words < words_on_page:
+        pages = 1
+        reminder = count_words
+    print('Dictionary contains ', count_words, ' words, ', words_on_page, ' item on the page, current page is 1 of', pages)
     current = 1
     while True:
-        for i in range(words_on_page):
-            print(eng_rus[(pages-1)*(current-1)+i])
+        if current == pages and reminder > 0:
+            t = reminder
+        else:
+            t = words_on_page
+        for i in range(t):
+            print(eng_rus[0][(pages-1)*(current-1)+i], '-', eng_rus[1][(pages-1)*(current-1)+i])
+        if pages == 1:
+            break
+        current = input('which page do you want to go to? Please enter the number: ')
+
 
 
 def add_word():
