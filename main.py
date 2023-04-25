@@ -39,7 +39,7 @@ def list_words():
     print('Dictionary contains ', count_words, ' words, ', words_on_page, ' item on the page, current page is 1 of', pages)
     current = 1
     while True:
-        if current == pages and reminder > 0:
+        if (current == pages) and (reminder > 0):
             t = reminder
         else:
             t = words_on_page
@@ -47,7 +47,7 @@ def list_words():
             print(eng_rus[0][(pages-1)*(current-1)+i], '-', eng_rus[1][(pages-1)*(current-1)+i])
         if pages == 1:
             break
-        current = input('which page do you want to go to? Please enter the number: ')
+        current = int(input('which page do you want to go to? Please enter the number: '))
 
 
 
