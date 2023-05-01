@@ -44,21 +44,57 @@ def list_words():
         else:
             t = words_on_page
         for i in range(t):
-            print(eng_rus[0][(pages-1)*(current-1)+i], '-', eng_rus[1][(pages-1)*(current-1)+i])
+            print(eng_rus[0][words_on_page*(current-1)+i], '-', eng_rus[1][words_on_page*(current-1)+i])
         if pages == 1:
             break
+        if is_quit('Do u want to continue, if not pleas type "q" '):
+            break
         current = int(input('which page do you want to go to? Please enter the number: '))
+    return(current)
 
 
 
 def add_word():
-    pass
+    print('add_word')
+
+
+def save_dict():
+    f = open('dict.txt', 'w', encoding='utf8')
+    for i in range(count_words):
+        temp = eng_rus[0][i] + ';' + eng_rus[1][i] + '\n'
+        f.write(temp)
+    f.close
+
 
 def edit_word():
-    pass
+
+
+
+    num = list_words()
+    wn = int(input('Please entre position wrong word: '))
+    print(eng_rus[0], '-', eng_rus[1])
+    item = int(input('What word is wrong? 0- englis word, 1- russian word: '))
+    print(words_on_page * (num - 1) + (wn-1))
+    eng_rus[item][words_on_page * (num-1) + (wn-1)] = input()
+    #print(eng_rus[words_on_pages * (num - 1) + wn])
+    print(eng_rus[0], '-', eng_rus[1])
+    save_dict()
+
+
 
 def edit():
-    pass
+    print('Edit mod activ')
+    while True:
+        ch = input('Choose edit mod: a- add word, e- edit word, q- quit: ')
+        print(ch)
+        if ch in ['a', 'A', 'ф', 'Ф']: add_word()
+        elif ch in ['e', 'E', 'у', 'У']: edit_word()
+        elif ch in ['q', 'Q', 'й', 'Й']:break
+        else:
+            print('Wrong command! Repeat please.')
+
+
+
 def translete():
     a, b = test_mode('Please select translation direction: eng-рус(press 1), рус-eng(press 2) ')
     query = input('Please type your word').lower()

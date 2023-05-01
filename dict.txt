@@ -1,6 +1,7 @@
-apple;яблоко
-table;стол
-sun;солнце
-dog;собака
+house;дом
 cat;кот
+dog;собака
 pen;ручка
+door;дверь
+oak;дуб
+tree;дерево
