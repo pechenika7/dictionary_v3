@@ -1,4 +1,5 @@
 import random
+import shutil
 
 def test_mode(promt):
     a = 0
@@ -28,9 +29,6 @@ def left_case_string(s):
 def edit_settings():
     pass
 
-def back_up():
-    print('back up')
-
 
 def list_words():
     reminder = count_words % words_on_page
@@ -56,15 +54,22 @@ def list_words():
         current = int(input('which page do you want to go to? Please enter the number: '))
     return(current)
 
+def restore():
+    print('restore')
+    shutil.copy2('dict.bak', 'dict.txt')
 
-def save_dict():
+def save_dict(path = 'dict.txt'):
     count_words = len(eng_rus[0])
-    f = open('dict.txt', 'w', encoding='utf8')
+    f = open(path, 'w', encoding='utf8')
     for i in range(count_words):
         temp = eng_rus[0][i] + ';' + eng_rus[1][i] + '\n'
         f.write(temp)
     f.close
 
+
+def back_up():
+    print('back up')
+    save_dict('dict.bak')
 
 
 def add_word():
@@ -92,6 +97,7 @@ def edit_word():
 
 def edit():
     print('Edit mod activ')
+    back_up()
     while True:
         ch = input('Choose edit mod: a- add word, e- edit word, q- quit: ')
         print(ch)
@@ -188,7 +194,7 @@ def main_dict():
     print('Hello! I am program dictionary!')
     while True:
         print('Please select command')
-        ch = input('q- quite work, l- list words, e- edit, t- test, d- translate, s- settings, b- backup.\n').upper()
+        ch = input('q- quite work, l- list words, e- edit, t- test, d- translate, s- settings, b- backup, r- restore.\n').upper()
         if ch in ['Q', 'Й']: break
         elif ch in ['L', 'Д']: list_words()
         elif ch == 'E': edit()
@@ -196,6 +202,7 @@ def main_dict():
         elif ch == 'D': translete()
         elif ch == 'S': edit_settings()
         elif ch == 'B': backup()
+        elif ch == 'R': restore()
         else: print('Wrong command! Repeat please.')
     print('Goodbye!')
 
