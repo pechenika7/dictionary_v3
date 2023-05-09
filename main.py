@@ -28,6 +28,10 @@ def left_case_string(s):
 def edit_settings():
     pass
 
+def back_up():
+    print('back up')
+
+
 def list_words():
     reminder = count_words % words_on_page
     pages = count_words // words_on_page
@@ -53,12 +57,8 @@ def list_words():
     return(current)
 
 
-
-def add_word():
-    print('add_word')
-
-
 def save_dict():
+    count_words = len(eng_rus[0])
     f = open('dict.txt', 'w', encoding='utf8')
     for i in range(count_words):
         temp = eng_rus[0][i] + ';' + eng_rus[1][i] + '\n'
@@ -66,10 +66,18 @@ def save_dict():
     f.close
 
 
+
+def add_word():
+    print('add_word')
+    temp = input('Please type new couple of words: ')
+    temp = temp.split()
+    eng_rus[0].append(temp[0])
+    eng_rus[1].append(temp[1])
+    save_dict()
+
+
+
 def edit_word():
-
-
-
     num = list_words()
     wn = int(input('Please entre position wrong word: '))
     print(eng_rus[0], '-', eng_rus[1])
@@ -180,13 +188,14 @@ def main_dict():
     print('Hello! I am program dictionary!')
     while True:
         print('Please select command')
-        ch = input('q- quite work, l- list words, e- edit, t- test, d- translete, s- settings.\n').upper()
+        ch = input('q- quite work, l- list words, e- edit, t- test, d- translate, s- settings, b- backup.\n').upper()
         if ch in ['Q', 'Й']: break
         elif ch in ['L', 'Д']: list_words()
         elif ch == 'E': edit()
         elif ch == 'T': test()
         elif ch == 'D': translete()
         elif ch == 'S': edit_settings()
+        elif ch == 'B': backup()
         else: print('Wrong command! Repeat please.')
     print('Goodbye!')
 
