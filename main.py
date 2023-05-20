@@ -1,24 +1,6 @@
 import random
 from shutil import copy2
 
-def test_mode(promt):
-    a = 0
-    b = 0
-    while True:
-        tm = input(promt).upper()
-        if tm in ['E', 'У', '1']:
-            # translate from english to russian
-            a = 0
-            b = 1
-            break
-        elif tm in ['R', 'К', '2']:
-            # translate from russian to engish
-            a = 1
-            b = 0
-            break
-        else:
-            print('Wrong command! Repeat please.')
-    return a, b
 
 def is_quit(promt=''):
     return input(promt) in ['Q', 'q', 'Й', 'й']
@@ -105,6 +87,27 @@ def edit():
 
 
 
+def test_mode(promt):
+    a = 0
+    b = 0
+    while True:
+        tm = input(promt).upper()
+        if tm in ['E', 'У', '1']:
+            # translate from english to russian
+            a = 0
+            b = 1
+            break
+        elif tm in ['R', 'К', '2']:
+            # translate from russian to engish
+            a = 1
+            b = 0
+            break
+        else:
+            print('Wrong command! Repeat please.')
+    return a, b
+
+
+
 def translete():
     a, b = test_mode('Please select translation direction: eng-рус(press 1), рус-eng(press 2) ')
     query = input('Please type your word').lower()
@@ -116,6 +119,8 @@ def translete():
             break
     if not(is_fine):
         print('Word not found')
+
+
 
 def test():
     if eng_rus == [[], []]:
