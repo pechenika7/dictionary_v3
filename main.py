@@ -178,7 +178,7 @@ def main_dict():
     rus = []
     while True:
         item = dict_file.readline()
-        if item == '':
+        if item == '' or item == '\n':
             break
         temp_list = item.split(';')
         eng.append(temp_list[0])
