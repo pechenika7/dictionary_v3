@@ -1,6 +1,25 @@
 import random
 from shutil import copy2
 
+def test_mode(promt):
+    a = 0
+    b = 0
+    while True:
+        tm = input(promt).upper()
+        if tm in ['E', 'У', '1']:
+            # translate from english to russian
+            a = 0
+            b = 1
+            break
+        elif tm in ['R', 'К', '2']:
+            # translate from russian to engish
+            a = 1
+            b = 0
+            break
+        else:
+            print('Wrong command! Repeat please.')
+    return a, b
+
 def is_quit(promt=''):
     return input(promt) in ['Q', 'q', 'Й', 'й']
 
@@ -98,31 +117,7 @@ def translete():
     if not(is_fine):
         print('Word not found')
 
-
-
 def test():
-
-    def test_mode(promt):
-        a = 0
-        b = 0
-        while True:
-            tm = input(promt).upper()
-            if tm in ['E', 'У', '1']:
-                # translate from english to russian
-                a = 0
-                b = 1
-                break
-            elif tm in ['R', 'К', '2']:
-                # translate from russian to engish
-                a = 1
-                b = 0
-                break
-            else:
-                print('Wrong command! Repeat please.')
-        return a, b
-
-
-
     if eng_rus == [[], []]:
         print('Sorry. Dictionary is empty.')
     else:
