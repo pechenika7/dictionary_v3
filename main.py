@@ -1,5 +1,5 @@
 import random
-import shutil
+from shutil import copy2
 
 def test_mode(promt):
     a = 0
@@ -22,9 +22,6 @@ def test_mode(promt):
 
 def is_quit(promt=''):
     return input(promt) in ['Q', 'q', 'Й', 'й']
-
-def left_case_string(s):
-    pass
 
 def edit_settings():
     pass
@@ -56,7 +53,7 @@ def list_words():
 
 def restore():
     print('restore')
-    shutil.copy2('dict.bak', 'dict.txt')
+    copy2('dict.bak', 'dict.txt')
 
 def save_dict(path = 'dict.txt'):
     count_words = len(eng_rus[0])
@@ -73,7 +70,6 @@ def back_up():
 
 
 def add_word():
-    print('add_word')
     temp = input('Please type new couple of words: ')
     temp = temp.split()
     eng_rus[0].append(temp[0])
@@ -81,16 +77,16 @@ def add_word():
     save_dict()
 
 
-
 def edit_word():
     num = list_words()
     wn = int(input('Please entre position wrong word: '))
-    print(eng_rus[0], '-', eng_rus[1])
-    item = int(input('What word is wrong? 0- englis word, 1- russian word: '))
-    print(words_on_page * (num - 1) + (wn-1))
-    eng_rus[item][words_on_page * (num-1) + (wn-1)] = input()
+    pos = words_on_page * (num - 1) + (wn - 1)
+    print(eng_rus[0][pos], '-', eng_rus[1][pos])
+    item = int(input('What word is wrong? 0- english word, 1- russian word: '))
+    #print(words_on_page * (num - 1) + (wn - 1))
+    eng_rus[item][pos] = input('Please type correct variant: ')
     #print(eng_rus[words_on_pages * (num - 1) + wn])
-    print(eng_rus[0], '-', eng_rus[1])
+    #print(eng_rus[0][pos], '-', eng_rus[1][pos])
     save_dict()
 
 
