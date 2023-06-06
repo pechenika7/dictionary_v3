@@ -8,7 +8,6 @@ def is_quit(promt=''):
 def edit_settings():
     pass
 
-
 def list_words():
     reminder = count_words % words_on_page
     pages = count_words // words_on_page
@@ -74,16 +73,19 @@ def edit_word():
 
 
 def edit():
-    print('Edit mod activ')
-    back_up()
-    while True:
-        ch = input('Choose edit mod: a- add word, e- edit word, q- quit: ')
-        print(ch)
-        if ch in ['a', 'A', 'ф', 'Ф']: add_word()
-        elif ch in ['e', 'E', 'у', 'У']: edit_word()
-        elif ch in ['q', 'Q', 'й', 'Й']:break
-        else:
-            print('Wrong command! Repeat please.')
+    if user_dict == 'Vika' :
+      print('Edit mod activ')
+      back_up()
+      while True:
+          ch = input('Choose edit mod: a- add word, e- edit word, q- quit: ')
+          print(ch)
+          if ch in ['a', 'A', 'ф', 'Ф']: add_word()
+          elif ch in ['e', 'E', 'у', 'У']: edit_word()
+          elif ch in ['q', 'Q', 'й', 'Й']:break
+          else:
+              print('Wrong command! Repeat please.')
+    else:
+      print("Access denied- you don't have permission.")
 
 
 
@@ -192,7 +194,7 @@ def main_dict():
     count_words = len(eng)
     dict_file.close
 
-    print('Hello! I am program dictionary!')
+
     while True:
         print('Please select command')
         ch = input('q- quite work, l- list words, e- edit, t- test, d- translate, s- settings, b- backup, r- restore.\n').upper()
@@ -207,6 +209,33 @@ def main_dict():
         else: print('Wrong command! Repeat please.')
     print('Goodbye!')
 
+def auth():
 
+    def sign_in():
+        user_dict='Vika'
+        return True
 
+    def reg():
+        user_dict='Pushok'
+        return True
+
+    def guest():
+        user_dict= 'guest'
+        return True
+
+    global user_dict
+    user_dict = 'guest'
+    print('Hello! I am program dictionary!')
+    while True:
+        print('Please select command')
+        ch = input('s- sign in, r- registration, g- guest.\n').upper()
+        if ch in ['Q', 'Й']: break
+        elif ch == 'S':
+            flag= sign_in()
+            if flag:break
+        elif ch == 'R': reg()
+        elif ch == 'G': guest()
+        else: print('Wrong command! Repeat please.')
+
+auth()
 main_dict()
