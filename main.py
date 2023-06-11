@@ -5,8 +5,10 @@ from shutil import copy2
 def is_quit(promt=''):
     return input(promt) in ['Q', 'q', 'Й', 'й']
 
+
 def edit_settings():
     pass
+
 
 def list_words():
     reminder = count_words % words_on_page
@@ -32,9 +34,11 @@ def list_words():
         current = int(input('which page do you want to go to? Please enter the number: '))
     return(current)
 
+
 def restore():
     print('restore')
     copy2('dict.bak', 'dict.txt')
+
 
 def save_dict(path = 'dict.txt'):
     count_words = len(eng_rus[0])
@@ -68,8 +72,7 @@ def edit_word():
     eng_rus[item][pos] = input('Please type correct variant: ')
     #print(eng_rus[words_on_pages * (num - 1) + wn])
     #print(eng_rus[0][pos], '-', eng_rus[1][pos])
-    save_dict()
-
+    save_dict()\
 
 
 def edit():
@@ -80,13 +83,12 @@ def edit():
           ch = input('Choose edit mod: a- add word, e- edit word, q- quit: ')
           print(ch)
           if ch in ['a', 'A', 'ф', 'Ф']: add_word()
-          elif ch in ['e', 'E', 'у', 'У']: edit_word()
-          elif ch in ['q', 'Q', 'й', 'Й']:break
+          elif ch in ['e', 'E', 'у', 'У'] : edit_word()
+          elif ch in ['q', 'Q', 'й', 'Й'] : break
           else:
               print('Wrong command! Repeat please.')
     else:
       print("Access denied- you don't have permission.")
-
 
 
 def test_mode(promt):
@@ -109,8 +111,7 @@ def test_mode(promt):
     return a, b
 
 
-
-def translete():
+def translate():
     a, b = test_mode('Please select translation direction: eng-рус(press 1), рус-eng(press 2) ')
     query = input('Please type your word').lower()
     is_fine = False
@@ -121,7 +122,6 @@ def translete():
             break
     if not(is_fine):
         print('Word not found')
-
 
 
 def test():
@@ -147,8 +147,6 @@ def test():
             number_list.remove(n)
             if is_quit('Would you like to finish press "q", otherwise press any key: '):
                 break
-
-
 
 
 def main_dict():
@@ -202,7 +200,7 @@ def main_dict():
         elif ch in ['L', 'Д']: list_words()
         elif ch == 'E': edit()
         elif ch == 'T': test()
-        elif ch == 'D': translete()
+        elif ch == 'D': translate()
         elif ch == 'S': edit_settings()
         elif ch == 'B': backup()
         elif ch == 'R': restore()
@@ -211,12 +209,37 @@ def main_dict():
 
 def auth():
 
+    def load_users():
+        user_file = open('users.data', 'r', encoding='utf8')
+        nick = []
+        password = []
+        role = []
+        while True:
+            item = user_file.readline()
+            if item == '' or item == '\n':
+                break
+            temp_list = item.split(';')
+            nick.append(temp_list[0])
+            password.append(temp_list[1])
+            role.append(temp_list[2].strip())
+        user_dict = [nick, password, role]
+        count_user = len(nick)
+        user_file.close
+        print (user_dict)
+
     def sign_in():
-        user_dict='Vika'
+        log = input('Please entre your nickname: ')
+        paswd = input('Please entre your password: ')
+        flag = False
+        for u in user_dict[0]:
+            if u == log:
+                if paswd == user_dict[1][user_dict[0].index(u)]:
+                    print('Hello ', u, 'you successfully logged in')
+
         return True
 
     def reg():
-        user_dict='Pushok'
+        user_dict = 'Pushok'
         return True
 
     def guest():
@@ -224,15 +247,15 @@ def auth():
         return True
 
     global user_dict
-    user_dict = 'guest'
+    load_users()
     print('Hello! I am program dictionary!')
     while True:
         print('Please select command')
         ch = input('s- sign in, r- registration, g- guest.\n').upper()
         if ch in ['Q', 'Й']: break
         elif ch == 'S':
-            flag= sign_in()
-            if flag:break
+            flag = sign_in()
+            if flag: break
         elif ch == 'R': reg()
         elif ch == 'G': guest()
         else: print('Wrong command! Repeat please.')
