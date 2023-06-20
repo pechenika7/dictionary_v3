@@ -1,3 +1,6 @@
+global current_user
+current_user = 0
+
 import random
 from shutil import copy2
 
@@ -74,7 +77,7 @@ def edit_word():
     save_dict()
 
 
-def edit():
+def edit(current_user):
     if user_dict[2][current_user] == 2:
       print('Edit mod activ')
       back_up()
@@ -109,6 +112,7 @@ def test_mode(promt):
             print('Wrong command! Repeat please.')
     return a, b
 
+
 def translate():
     a, b = test_mode('Please select translation direction: eng-рус(press 1), рус-eng(press 2) ')
     query = input('Please type your word').lower()
@@ -120,6 +124,7 @@ def translate():
             break
     if not (is_fine):
         print('Word not found')
+
 
 def test():
     if eng_rus == [[], []]:
@@ -192,7 +197,7 @@ def main_dict():
         ch = input('q- quite work, l- list words, e- edit, t- test, d- translate, s- settings, b- backup, r- restore.\n').upper()
         if ch in ['Q', 'Й']: break
         elif ch in ['L', 'Д']: list_words()
-        elif ch in ['E', 'У']: edit()
+        elif ch in ['E', 'У']: edit(current_user)
         elif ch in ['T', 'Е']: test()
         elif ch in ['D', 'В']: translate()
         elif ch in ['S', 'Ы']: edit_settings()
@@ -201,11 +206,11 @@ def main_dict():
         else: print('Wrong command! Repeat please.')
     print('Goodbye!')
 
+
 def auth():
 
     def load_users():
         global user_dict
-        global current_user
         current_user = 0
         user_dict = []
         user_file = open('users.data', 'r', encoding='utf8')
@@ -229,14 +234,12 @@ def auth():
     def sign_in():
         log = input('Please entre your nickname: ')
         paswd = input('Please entre your password: ')
-        flag = False
         for u in user_dict[0]:
             if u == log:
                 if paswd == user_dict[1][user_dict[0].index(u)]:
-                    print('Hello ', u, 'you successfully logged in')
-                    flag = True
-                    current_user = u
-        return flag
+                    print('Hello', u, 'you successfully logged in')
+                    return user_dict[0].index(u)
+        return -1
 
     def reg():
         user_dict = 'Pushok'
@@ -246,7 +249,6 @@ def auth():
         user_dict= 'guest'
         return True
 
-
     load_users()
     print('Hello! I am program dictionary!')
     while True:
@@ -254,14 +256,16 @@ def auth():
         ch = input('s- sign in, r- registration, g- guest.\n').upper()
         if ch in ['Q', 'Й']: break
         elif ch in ['S', 'Ы']:
-            flag = sign_in()
-            if flag: break
+            current_user = sign_in()
+            if current_user != -1:
+                break
             print('Incorrect login or password. Please try again ')
         elif ch in ['R', 'К']: reg()
         elif ch in ['G', 'П']: guest()
         else:
             print('Wrong command! Repeat please.')
 
+    return current_user
 
-auth()
+current_user = auth()
 main_dict()
