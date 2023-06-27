@@ -9,8 +9,9 @@ def is_quit(promt=''):
     return input(promt) in ['Q', 'q', 'Й', 'й']
 
 
-def edit_settings():
-    pass
+def edit_settings(current_user):
+    if user_dict[2][current_user] in [1, 2]:
+      pass
 
 
 def list_words():
@@ -38,9 +39,10 @@ def list_words():
     return(current)
 
 
-def restore():
-    print('restore')
-    copy2('dict.bak', 'dict.txt')
+def restore(current_user):
+    if user_dict[2][current_user] == 2:
+      print('restore')
+      copy2('dict.bak', 'dict.txt')
 
 
 def save_dict(path = 'dict.txt'):
@@ -52,8 +54,9 @@ def save_dict(path = 'dict.txt'):
     f.close
 
 
-def back_up():
-    save_dict('dict.bak')
+def back_up(current_user):
+    if user_dict[2][current_user] == 2:
+      save_dict('dict.bak')
 
 
 def add_word():
@@ -130,25 +133,26 @@ def test():
     if eng_rus == [[], []]:
         print('Sorry. Dictionary is empty.')
     else:
-        a, b = test_mode('Please select test mod. If you want to translate words from English to Russian then press "e", otherwise press "r": ')
-        number_list = []
-        for i in range(count_words):
-            number_list.append(i)
-        while True:
-            n = random.randint(a, count_words-1)
-            if n in number_list:
-                if input('Please translate '+eng_rus[a][n]+' ') == eng_rus[b][n]:
-                    print('You are right!')
-                else:
-                    print('No, you are wrong. Correct variant: "'+eng_rus[b][n]+'"')
-            else:
-                if number_list == []:
-                    print('Testing finished')
-                    break
-                continue
-            number_list.remove(n)
-            if is_quit('Would you like to finish press "q", otherwise press any key: '):
-                break
+        if not(is_quit("Hello, I'm program testing. Press any key to start ot 'q' to quit.")):
+          a, b = test_mode('Please select test mod. If you want to translate words from English to Russian then press "e", otherwise press "r": ')
+          number_list = []
+          for i in range(count_words):
+             number_list.append(i)
+          while True:
+              n = random.randint(a, count_words-1)
+              if n in number_list:
+                  if input('Please translate '+eng_rus[a][n]+' ') == eng_rus[b][n]:
+                      print('You are right!')
+                  else:
+                      print('No, you are wrong. Correct variant: "'+eng_rus[b][n]+'"')
+              else:
+                  if number_list == []:
+                      print('Testing finished')
+                      break
+                  continue
+              number_list.remove(n)
+              if is_quit('Would you like to finish press "q", otherwise press any key: '):
+                  break
 
 
 def main_dict():
@@ -195,14 +199,14 @@ def main_dict():
     while True:
         print('Please select command')
         ch = input('q- quite work, l- list words, e- edit, t- test, d- translate, s- settings, b- backup, r- restore.\n').upper()
-        if ch in ['Q', 'Й']: break
-        elif ch in ['L', 'Д']: list_words()
-        elif ch in ['E', 'У']: edit(current_user)
-        elif ch in ['T', 'Е']: test()
-        elif ch in ['D', 'В']: translate()
-        elif ch in ['S', 'Ы']: edit_settings()
-        elif ch in ['B', 'И']: backup()
-        elif ch in ['R', 'К']: restore()
+        if ch in {'Q', 'Й'}: break
+        elif ch in {'L', 'Д'}: list_words()
+        elif ch in {'E', 'У'}: edit(current_user)
+        elif ch in {'T', 'Е'}: test()
+        elif ch in {'D', 'В'}: translate()
+        elif ch in {'S', 'Ы'}: edit_settings()
+        elif ch in {'B', 'И'}: backup()
+        elif ch in {'R', 'К'}: restore()
         else: print('Wrong command! Repeat please.')
     print('Goodbye!')
 
@@ -246,8 +250,8 @@ def auth():
         return True
 
     def guest():
-        user_dict= 'guest'
-        return True
+        print('Welcome guest!\nFor full access you have to registration.')
+        return 0
 
     load_users()
     print('Hello! I am program dictionary!')
@@ -261,7 +265,9 @@ def auth():
                 break
             print('Incorrect login or password. Please try again ')
         elif ch in ['R', 'К']: reg()
-        elif ch in ['G', 'П']: guest()
+        elif ch in ['G', 'П']:
+            current_user = guest()
+            break
         else:
             print('Wrong command! Repeat please.')
 
