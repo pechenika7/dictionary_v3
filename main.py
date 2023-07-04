@@ -234,7 +234,7 @@ def auth():
             if item == '' or item == '\n':
                 break
             temp_list = item.split(';')
-            nick.append(temp_list[0])
+            nick.append(decode_pswd(temp_list[0]))
             password.append(decode_pswd(temp_list[1]))
             role.append(int(temp_list[2].strip()))
         user_dict = [nick, password, role]
@@ -253,7 +253,7 @@ def auth():
         return -1
 
     def reg():
-        nick = input('Please entre your nickname: ')
+        nick = code_pswd(input('Please entre your nickname: '))
         pswd = code_pswd(input('Please entre your password: '))
         user_dict[0].append(nick)
         user_dict[1].append(pswd)
