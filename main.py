@@ -5,12 +5,20 @@ import random
 from shutil import copy2
 
 
+def code_pswd(str_):
+    return str_[::-1]
+
+
+def decode_pswd(str_):
+    return str_[::-1]
+
+
 def is_quit(promt=''):
-    return input(promt) in ['Q', 'q', 'Й', 'й']
+    return input(promt) in {'Q', 'q', 'Й', 'й'}
 
 
 def edit_settings(current_user):
-    if user_dict[2][current_user] in [1, 2]:
+    if user_dict[2][current_user] in {1, 2}:
       pass
 
 
@@ -87,9 +95,9 @@ def edit(current_user):
       while True:
           ch = input('Choose edit mod: a- add word, e- edit word, q- quit: ')
           print(ch)
-          if ch in ['a', 'A', 'ф', 'Ф']: add_word()
-          elif ch in ['e', 'E', 'у', 'У']: edit_word()
-          elif ch in ['q', 'Q', 'й', 'Й']: break
+          if ch in {'a', 'A', 'ф', 'Ф'}: add_word()
+          elif ch in {'e', 'E', 'у', 'У'}: edit_word()
+          elif ch in {'q', 'Q', 'й', 'Й'}: break
           else:
               print('Wrong command! Repeat please.')
     else:
@@ -227,13 +235,12 @@ def auth():
                 break
             temp_list = item.split(';')
             nick.append(temp_list[0])
-            password.append(temp_list[1])
+            password.append(decode_pswd(temp_list[1]))
             role.append(int(temp_list[2].strip()))
         user_dict = [nick, password, role]
         count_user = len(nick)
         user_file.close
         print (user_dict)
-
 
     def sign_in():
         log = input('Please entre your nickname: ')
@@ -246,8 +253,16 @@ def auth():
         return -1
 
     def reg():
-        user_dict = 'Pushok'
-        return True
+        nick = input('Please entre your nickname: ')
+        pswd = code_pswd(input('Please entre your password: '))
+        user_dict[0].append(nick)
+        user_dict[1].append(pswd)
+        user_dict[2].append(1)
+        user_file = open('users.data', 'a', encoding='utf8')
+        item = ('\n' + nick + ';' + pswd + ';' + '1')
+        user_file.write(item)
+        user_file.close
+        return len(user_dict[0]) - 1
 
     def guest():
         print('Welcome guest!\nFor full access you have to registration.')
@@ -258,14 +273,17 @@ def auth():
     while True:
         print('Please select command')
         ch = input('s- sign in, r- registration, g- guest.\n').upper()
-        if ch in ['Q', 'Й']: break
-        elif ch in ['S', 'Ы']:
+        if ch in {'Q', 'Й'}: break
+        elif ch in {'S', 'Ы'}:
             current_user = sign_in()
             if current_user != -1:
                 break
             print('Incorrect login or password. Please try again ')
-        elif ch in ['R', 'К']: reg()
-        elif ch in ['G', 'П']:
+        elif ch in {'R', 'К'}:
+            current_user = reg()
+            print(current_user)
+            break
+        elif ch in {'G', 'П'}:
             current_user = guest()
             break
         else:
