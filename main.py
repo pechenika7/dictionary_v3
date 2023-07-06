@@ -146,11 +146,15 @@ def test():
           number_list = []
           for i in range(count_words):
              number_list.append(i)
+          summary = 0
+          succes = 0
           while True:
               n = random.randrange(count_words)
               if n in number_list:
+                  summary += 1
                   if input('Please translate '+eng_rus[a][n]+' ') == eng_rus[b][n]:
                       print('You are right!')
+                      succes+=1
                   else:
                       print('No, you are wrong. Correct variant: "'+eng_rus[b][n]+'"')
               else:
@@ -161,6 +165,7 @@ def test():
               number_list.remove(n)
               if is_quit('Would you like to finish press "q", otherwise press any key: '):
                   break
+          print('You result ' + str(succes) + '/' + str(summary))
 
 
 def main_dict():
