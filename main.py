@@ -147,14 +147,14 @@ def test():
           for i in range(count_words):
              number_list.append(i)
           while True:
-              n = random.randint(a, count_words-1)
+              n = random.randrange(count_words)
               if n in number_list:
                   if input('Please translate '+eng_rus[a][n]+' ') == eng_rus[b][n]:
                       print('You are right!')
                   else:
                       print('No, you are wrong. Correct variant: "'+eng_rus[b][n]+'"')
               else:
-                  if number_list == []:
+                  if len(number_list) == 0:
                       print('Testing finished')
                       break
                   continue
