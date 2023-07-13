@@ -4,6 +4,7 @@ current_user = 0
 import random
 from shutil import copy2
 from password_utils import code_pswd, decode_pswd
+from back_up_utils import save_dict, back_up, restore
 def is_quit(promt=''):
     return input(promt) in {'Q', 'q', 'Й', 'й'}
 
@@ -36,26 +37,6 @@ def list_words():
             break
         current = int(input('which page do you want to go to? Please enter the number: '))
     return(current)
-
-
-def restore(current_user):
-    if user_dict[2][current_user] == 2:
-      print('restore')
-      copy2('dict.bak', 'dict.txt')
-
-
-def save_dict(path = 'dict.txt'):
-    count_words = len(eng_rus[0])
-    f = open(path, 'w', encoding='utf8')
-    for i in range(count_words):
-        temp = eng_rus[0][i] + ';' + eng_rus[1][i] + '\n'
-        f.write(temp)
-    f.close
-
-
-def back_up(current_user):
-    if user_dict[2][current_user] == 2:
-      save_dict('dict.bak')
 
 
 def add_word():
@@ -208,9 +189,12 @@ def main_dict():
         elif ch in {'E', 'У'}: edit(current_user)
         elif ch in {'T', 'Е'}: test()
         elif ch in {'D', 'В'}: translate()
-        elif ch in {'S', 'Ы'}: edit_settings()
-        elif ch in {'B', 'И'}: backup()
-        elif ch in {'R', 'К'}: restore()
+        elif ch in {'S', 'Ы'}: edit_settings(current_user)
+        elif ch in {'B', 'И'}:
+            res=back_up(current_user, user_dict)
+            if res != -1:
+                count_words = res
+        elif ch in {'R', 'К'}: restore(current_user, user_dict)
         else: print('Wrong command! Repeat please.')
     print('Goodbye!')
 
@@ -236,7 +220,7 @@ def auth():
         user_dict = [nick, password, role]
         count_user = len(nick)
         user_file.close
-        print (user_dict)
+        print(user_dict)
 
     def sign_in():
         log = input('Please entre your nickname: ')
