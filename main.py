@@ -3,16 +3,7 @@ current_user = 0
 
 import random
 from shutil import copy2
-
-
-def code_pswd(str_):
-    return str_[::-1]
-
-
-def decode_pswd(str_):
-    return str_[::-1]
-
-
+from password_utils import code_pswd, decode_pswd
 def is_quit(promt=''):
     return input(promt) in {'Q', 'q', 'Й', 'й'}
 
