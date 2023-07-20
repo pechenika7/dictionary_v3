@@ -1,7 +1,7 @@
 global current_user
 current_user = 0
 
-import random
+from random import *
 from shutil import copy2
 from password_utils import code_pswd, decode_pswd
 from back_up_utils import save_dict, back_up, restore
@@ -118,7 +118,7 @@ def test():
             summary = 0
             succes = 0
             list_ = list(range(count_words))
-            random.shuffle(list_)
+            shuffle(list_)
             for n in list_:
                 summary += 1
                 if input('Please translate '+eng_rus[a][n]+' ') == eng_rus[b][n]:
