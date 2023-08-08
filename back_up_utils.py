@@ -19,5 +19,7 @@ def back_up(current_user, user_dict):
 
 def restore(current_user, user_dict):
     if user_dict[2][current_user] == 2:
-      print('restore')
+      print('Restore completed')
       copy2('dict.bak', 'dict.txt')
+    else:
+        print("Access denied- you don't have permission.")

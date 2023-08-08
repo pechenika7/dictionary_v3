@@ -1,6 +1,3 @@
-global current_user
-current_user = 0
-
 from random import *
 from shutil import copy2
 from password_utils import code_pswd, decode_pswd
