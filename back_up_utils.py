@@ -8,7 +8,7 @@ def save_dict(eng_rus, path='dict.txt'):
     return cw
 
 
-def back_up(current_user, user_dict):
+def back_up(current_user, user_dict, eng_rus):
     if user_dict[2][current_user] == 2:
         cw = save_dict(eng_rus, 'dict.bak')
         return cw

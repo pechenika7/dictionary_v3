@@ -1,9 +1,16 @@
-from random import *
+from random import shuffle
 from shutil import copy2
 from password_utils import code_pswd, decode_pswd
 from back_up_utils import save_dict, back_up, restore
+
+
 def is_quit(promt=''):
-    return input(promt) in {'Q', 'q', 'Й', 'й'}
+    temp = (input(promt).upper())
+    flag = temp in {'Q', 'Й'}
+    res = list()
+    res.append(flag)
+    res.append(temp)
+    return res
 
 
 def edit_settings(current_user):
@@ -30,18 +37,20 @@ def list_words():
             print(eng_rus[0][words_on_page*(current-1)+i], '-', eng_rus[1][words_on_page*(current-1)+i])
         if pages == 1:
             break
-        if is_quit('Do u want to continue, if not pleas type "q" '):
+        res = is_quit('Do u want to continue, if not pleas type "q" ')
+        if (res[0]):
             break
         current = int(input('which page do you want to go to? Please enter the number: '))
     return(current)
 
 
 def add_word():
-    temp = input('Please type new couple of words: ')
-    temp = temp.split()
-    eng_rus[0].append(temp[0])
-    eng_rus[1].append(temp[1])
-    save_dict()
+    res = is_quit('Please type new couple of words or type "q" to quit: ')
+    if res[0] == False:
+      temp = res[1].split()
+      eng_rus[0].append(temp[0])
+      eng_rus[1].append(temp[1])
+      save_dict()
 
 
 def edit_word():
@@ -60,7 +69,7 @@ def edit_word():
 def edit(current_user):
     if user_dict[2][current_user] == 2:
       print('Edit mod activ')
-      back_up()
+      back_up(current_user, user_dict, eng_rus)
       while True:
           ch = input('Choose edit mod: a- add word, e- edit word, q- quit: ')
           print(ch)
@@ -110,7 +119,8 @@ def test():
     if eng_rus == [[], []]:
         print('Sorry. Dictionary is empty.')
     else:
-        if not(is_quit("Hello, I'm program testing. Press any key to start ot 'q' to quit.")):
+        res = is_quit("Hello, I'm program testing. Press any key to start ot 'q' to quit.")
+        if not(res[0]):
             a, b = test_mode('Please select test mod. If you want to translate words from English to Russian then press "e", otherwise press "r": ')
             summary = 0
             succes = 0
@@ -123,7 +133,8 @@ def test():
                   succes+=1
                 else:
                   print('No, you are wrong. Correct variant: "'+eng_rus[b][n]+'"')
-                if is_quit('Would you like to finish press "q", otherwise press any key: '):
+                res = is_quit('Would you like to finish press "q", otherwise press any key: ')
+                if res[0]:
                     break
             print('You result ' + str(succes) + '/' + str(summary))
 
@@ -179,7 +190,7 @@ def main_dict():
         elif ch in {'D', 'В'}: translate()
         elif ch in {'S', 'Ы'}: edit_settings(current_user)
         elif ch in {'B', 'И'}:
-            res=back_up(current_user, user_dict)
+            res = back_up(current_user, user_dict, eng_rus)
             if res != -1:
                 count_words = res
         elif ch in {'R', 'К'}: restore(current_user, user_dict)
