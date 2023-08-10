@@ -47,23 +47,22 @@ def list_words():
 def add_word():
     res = is_quit('Please type new couple of words or type "q" to quit: ')
     if res[0] == False:
-      temp = res[1].split()
-      eng_rus[0].append(temp[0])
-      eng_rus[1].append(temp[1])
-      save_dict()
+        temp = res[1].split()
+        eng_rus[0].append(temp[0])
+        eng_rus[1].append(temp[1])
+        save_dict()
 
 
 def edit_word():
     num = list_words()
-    wn = int(input('Please entre position wrong word: '))
-    pos = words_on_page * (num - 1) + (wn - 1)
-    print(eng_rus[0][pos], '-', eng_rus[1][pos])
-    item = int(input('What word is wrong? 0- english word, 1- russian word: '))
-    #print(words_on_page * (num - 1) + (wn - 1))
-    eng_rus[item][pos] = input('Please type correct variant: ')
-    #print(eng_rus[words_on_pages * (num - 1) + wn])
-    #print(eng_rus[0][pos], '-', eng_rus[1][pos])
-    save_dict()
+    res = is_quit('Please entre position wrong word or type "q" to quit: ')
+    if res[0] == False:
+        wn = int(res[1])
+        pos = words_on_page * (num - 1) + (wn - 1)
+        print(eng_rus[0][pos], '-', eng_rus[1][pos])
+        item = int(input('What word is wrong? 0- english word, 1- russian word: '))
+        eng_rus[item][pos] = input('Please type correct variant: ')
+        save_dict(eng_rus)
 
 
 def edit(current_user):
@@ -82,11 +81,10 @@ def edit(current_user):
       print("Access denied- you don't have permission.")
 
 
-def test_mode(promt):
+def test_mode(tm):
     a = 0
     b = 0
     while True:
-        tm = input(promt).upper()
         if tm in ['E', 'У', '1']:
             # translate from english to russian
             a = 0
@@ -119,9 +117,9 @@ def test():
     if eng_rus == [[], []]:
         print('Sorry. Dictionary is empty.')
     else:
-        res = is_quit("Hello, I'm program testing. Press any key to start ot 'q' to quit.")
-        if not(res[0]):
-            a, b = test_mode('Please select test mod. If you want to translate words from English to Russian then press "e", otherwise press "r": ')
+        res = is_quit("Hello, I am program testing. Please select test mod. If you want to translate words from English to Russian then press 'e', otherwise press 'r' or press 'q' to quit: ")
+        if res[0] == False:
+            a, b = test_mode(res[1])
             summary = 0
             succes = 0
             list_ = list(range(count_words))
