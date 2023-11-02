@@ -164,18 +164,16 @@ def main_dict():
 
     dict_file = open('dict.txt',  'r', encoding='utf8')
 
-    eng = []
-    rus = []
+    eng_rus = {}
     while True:
         item = dict_file.readline()
         if item == '' or item == '\n':
             break
         temp_list = item.split(';')
-        eng.append(temp_list[0])
-        rus.append(temp_list[1].strip())
-    eng_rus = [eng, rus]
-    count_words = len(eng)
+        eng_rus[temp_list[0]] = temp_list[1].strip()
+    count_words = len(eng_rus)
     dict_file.close
+    print(eng_rus)
 
 
     while True:
