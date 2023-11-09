@@ -47,8 +47,11 @@ def add_word():
     res = is_quit('Please type new couple of words or type "q" to quit: ')
     if res[0] == False:
         temp = res[1].split()
-        eng_rus[temp[0]] = temp[1].strip()
-        save_dict(eng_rus)
+        if eng_rus.get(temp[0]) == None:
+            eng_rus[temp[0]] = temp[1].strip()
+            save_dict(eng_rus)
+        else:
+            print('This word already in dictionary')
 
 
 def edit_word():

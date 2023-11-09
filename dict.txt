@@ -8,3 +8,4 @@ tree;дерево
 book;книга
 APPLE;ЯБЛОКО
 tit;синица
+peach;персик
