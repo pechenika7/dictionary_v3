@@ -101,16 +101,15 @@ def test_mode(tm):
 
 
 def translate():
-    a, b = test_mode('Please select translation direction: eng-рус(press 1), рус-eng(press 2) ')
-    query = input('Please type your word').lower()
-    is_fine = False
-    for i in range(count_words):
-        if query == eng_rus[a][i]:
-            print ('There is translate your word: "', eng_rus[b][i], '"')
-            is_fine = True
-            break
-    if not (is_fine):
-        print('Word not found')
+    query = input('Please type your word ').lower()
+    try:
+        print(eng_rus[query])
+    except:
+        try:
+            index = list(eng_rus.values()).index(query)
+            print(list(eng_rus.keys())[index])
+        except:
+            print('Word not found')
 
 
 def test():
