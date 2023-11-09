@@ -1,8 +1,11 @@
+from shutil import copy2
 def save_dict(eng_rus, path='dict.txt'):
-    cw = len(eng_rus[0]) #cw - count words
+    cw = len(eng_rus) #cw - count words
     f = open(path, 'w', encoding='utf8')
+    lk = list(eng_rus.keys()) #lk- list keys
+    lv = list(eng_rus.values()) #lv - list values
     for i in range(cw):
-        temp = eng_rus[0][i] + ';' + eng_rus[1][i] + '\n'
+        temp = lk[i] + ';' + lv[i] + '\n'
         f.write(temp)
     f.close
     return cw

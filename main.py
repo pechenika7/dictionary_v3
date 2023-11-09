@@ -1,12 +1,11 @@
 from random import shuffle
-from shutil import copy2
 from password_utils import code_pswd, decode_pswd
 from back_up_utils import save_dict, back_up, restore
 
 
 def is_quit(promt=''):
-    temp = (input(promt).upper())
-    flag = temp in {'Q', 'Й'}
+    temp = (input(promt).lower())
+    flag = temp in {'q', 'й'}
     res = list()
     res.append(flag)
     res.append(temp)
@@ -48,9 +47,8 @@ def add_word():
     res = is_quit('Please type new couple of words or type "q" to quit: ')
     if res[0] == False:
         temp = res[1].split()
-        eng_rus[0].append(temp[0])
-        eng_rus[1].append(temp[1])
-        save_dict()
+        eng_rus[temp[0]] = temp[1].strip()
+        save_dict(eng_rus)
 
 
 def edit_word():

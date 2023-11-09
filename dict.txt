@@ -6,3 +6,5 @@ door;дверь
 oak;дуб
 tree;дерево
 book;книга
+APPLE;ЯБЛОКО
+tit;синица
