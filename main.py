@@ -18,6 +18,8 @@ def edit_settings(current_user):
 
 
 def list_words():
+    lk = list(eng_rus.keys())  # lk- list keys
+    lv = list(eng_rus.values())  # lv - list values
     reminder = count_words % words_on_page
     pages = count_words // words_on_page
     if reminder > 0:
@@ -33,13 +35,13 @@ def list_words():
         else:
             t = words_on_page
         for i in range(t):
-            print(eng_rus[0][words_on_page*(current-1)+i], '-', eng_rus[1][words_on_page*(current-1)+i])
+            print(lk[words_on_page*(current-1)+i], '-', lv[words_on_page*(current-1)+i])
         if pages == 1:
             break
-        res = is_quit('Do u want to continue, if not pleas type "q" ')
+        res = is_quit('Select page or type "q" for quit ')
         if (res[0]):
             break
-        current = int(input('which page do you want to go to? Please enter the number: '))
+        current = int(res[1])
     return(current)
 
 
