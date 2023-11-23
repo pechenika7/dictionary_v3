@@ -57,14 +57,26 @@ def add_word():
 
 
 def edit_word():
-    num = list_words()
-    res = is_quit('Please entre position wrong word or type "q" to quit: ')
+
+    def get_key(d, value):
+        k = None
+        for k, v in d.items():
+            if v == value:
+                return k
+
+    r = list_words()
+    res = is_quit('Please type wrong word or type "q" to quit: ')
     if res[0] == False:
-        wn = int(res[1])
-        pos = words_on_page * (num - 1) + (wn - 1)
-        print(eng_rus[0][pos], '-', eng_rus[1][pos])
-        item = int(input('What word is wrong? 0- english word, 1- russian word: '))
-        eng_rus[item][pos] = input('Please type correct variant: ')
+        temp = eng_rus.get(res[1])
+        if temp == None:
+            k = get_key(eng_rus,res[1])
+            if k!= None:
+                eng_rus[k] = input('Please type correct variant: ')
+            else:
+                    print('Word not found')
+        else:
+            eng_rus[input('Please type correct variant: ')] = eng_rus.pop(res[1])
+        print(eng_rus)
         save_dict(eng_rus)
 
 
@@ -174,7 +186,7 @@ def main_dict():
         temp_list = item.split(';')
         eng_rus[temp_list[0]] = temp_list[1].strip()
     count_words = len(eng_rus)
-    dict_file.close
+    dict_file.close()
     print(eng_rus)
 
 
