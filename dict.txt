@@ -1,5 +1,4 @@
-home;дом
-cat;кот
+cat;кошка
 dog;собака
 pen;ручка
 door;дверь
@@ -9,3 +8,6 @@ book;книга
 tit;синица
 peach;персик
 apple;яблоко
+house;дом
+word1;слово
+word2;слово

@@ -59,10 +59,11 @@ def add_word():
 def edit_word():
 
     def get_key(d, value):
-        k = None
+        k_list = list()
         for k, v in d.items():
             if v == value:
-                return k
+                k_list.append(k)
+        return k_list
 
     r = list_words()
     res = is_quit('Please type wrong word or type "q" to quit: ')
@@ -70,8 +71,13 @@ def edit_word():
         temp = eng_rus.get(res[1])
         if temp == None:
             k = get_key(eng_rus,res[1])
-            if k!= None:
-                eng_rus[k] = input('Please type correct variant: ')
+            if k!= []:
+                if len(k) == 1:
+                    eng_rus[k[0]] = input('Please type correct variant: ')
+                else:
+                    print(k, '\n', 'According to your request find', len(k), 'words')
+                    req = int(input('Please type word number'))
+                    eng_rus[k[req-1]] = input('Please type correct variant: ')
             else:
                     print('Word not found')
         else:
