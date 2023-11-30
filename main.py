@@ -55,16 +55,14 @@ def add_word():
         else:
             print('This word already in dictionary')
 
+def get_key(d, value):
+    k_list = list()
+    for k, v in d.items():
+        if v == value:
+            k_list.append(k)
+    return k_list
 
 def edit_word():
-
-    def get_key(d, value):
-        k_list = list()
-        for k, v in d.items():
-            if v == value:
-                k_list.append(k)
-        return k_list
-
     r = list_words()
     res = is_quit('Please type wrong word or type "q" to quit: ')
     if res[0] == False:
@@ -126,11 +124,11 @@ def translate():
     try:
         print(eng_rus[query])
     except:
-        try:
-            index = list(eng_rus.values()).index(query)
-            print(list(eng_rus.keys())[index])
-        except:
+        k_list = get_key(eng_rus, query)
+        if k_list == []:
             print('Word not found')
+        else:
+            print(k_list)
 
 
 def test():
