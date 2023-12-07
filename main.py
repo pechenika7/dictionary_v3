@@ -12,6 +12,14 @@ def is_quit(promt=''):
     return res
 
 
+def get_key(dict, value):
+    k_list = list()
+    for k, v in dict.items():
+        if v == value:
+            k_list.append(k)
+    return k_list
+
+
 def edit_settings(current_user):
     if user_dict[2][current_user] in {1, 2}:
       pass
@@ -55,12 +63,6 @@ def add_word():
         else:
             print('This word already in dictionary')
 
-def get_key(d, value):
-    k_list = list()
-    for k, v in d.items():
-        if v == value:
-            k_list.append(k)
-    return k_list
 
 def edit_word():
     r = list_words()
@@ -100,25 +102,6 @@ def edit(current_user):
       print("Access denied- you don't have permission.")
 
 
-def test_mode(tm):
-    a = 0
-    b = 0
-    while True:
-        if tm in ['E', 'У', '1']:
-            # translate from english to russian
-            a = 0
-            b = 1
-            break
-        elif tm in ['R', 'К', '2']:
-            # translate from russian to engish
-            a = 1
-            b = 0
-            break
-        else:
-            print('Wrong command! Repeat please.')
-    return a, b
-
-
 def translate():
     query = input('Please type your word ').lower()
     try:
@@ -132,23 +115,47 @@ def translate():
 
 
 def test():
+    def get_translate(dict, word):
+        try:
+            temp = dict[word]
+        except:
+            temp = get_key(dict, word)
+            if temp == []:
+                temp = ''
+            else:
+                temp = temp[0]
+        return(temp)
+
     if eng_rus == [[], []]:
         print('Sorry. Dictionary is empty.')
     else:
         res = is_quit("Hello, I am program testing. Please select test mod. If you want to translate words from English to Russian then press 'e', otherwise press 'r' or press 'q' to quit: ")
         if res[0] == False:
-            a, b = test_mode(res[1])
+            if res[1] in ['e', 'у', '1']:
+                list_ = list(eng_rus.keys())
+                shuffle(list_)
+            else:
+                list_ = list(eng_rus.values())
+                shuffle(list_)
             summary = 0
             succes = 0
-            list_ = list(range(count_words))
-            shuffle(list_)
             for n in list_:
                 summary += 1
-                if input('Please translate '+eng_rus[a][n]+' ') == eng_rus[b][n]:
-                  print('You are right!')
-                  succes+=1
+                quest = input('Please translate '+n+' ') #ввод слова
+                answer = get_translate(eng_rus, quest) #перевод слова
+                try:
+                    gk = get_key(eng_rus,n)
+                    gk = gk[0]
+                except:
+                    gk = ''
+                print(quest)
+                print(answer)
+                print(gk)
+                if eng_rus.get(n) == quest or gk == quest:
+                    print('You are right!')
+                    succes +=1
                 else:
-                  print('No, you are wrong. Correct variant: "'+eng_rus[b][n]+'"')
+                  print('No, you are wrong.')
                 res = is_quit('Would you like to finish press "q", otherwise press any key: ')
                 if res[0]:
                     break
