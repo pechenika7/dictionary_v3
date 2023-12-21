@@ -1,7 +1,7 @@
 from random import shuffle
 from password_utils import code_pswd, decode_pswd
 from back_up_utils import save_dict, back_up, restore
-from line_by_line_translation import scan
+from line_by_line_translation import scan, list_translate
 
 
 def is_quit(promt=''):
@@ -11,14 +11,6 @@ def is_quit(promt=''):
     res.append(flag)
     res.append(temp)
     return res
-
-
-def get_key(dict, value):
-    k_list = list()
-    for k, v in dict.items():
-        if v == value:
-            k_list.append(k)
-    return k_list
 
 
 def edit_settings(current_user):
@@ -105,14 +97,7 @@ def edit(current_user):
 
 def translate():
     query = input('Please type your word ').lower()
-    try:
-        print(eng_rus[query])
-    except:
-        k_list = get_key(eng_rus, query)
-        if k_list == []:
-            print('Word not found')
-        else:
-            print(k_list)
+    print(translate1(query, eng_rus))
 
 
 def test():
@@ -211,7 +196,7 @@ def main_dict():
         elif ch in {'T', 'Е'}: test()
         elif ch in {'D', 'В'}: translate()
         elif ch in {'S', 'Ы'}: edit_settings(current_user)
-        elif ch in {'X', 'Ч'}: print(scan())
+        elif ch in {'X', 'Ч'}: print(list_translate(scan(), eng_rus))
         elif ch in {'B', 'И'}:
             res = back_up(current_user, user_dict, eng_rus)
             if res != -1:
