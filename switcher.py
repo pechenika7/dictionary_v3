@@ -1,0 +1,2 @@
+def switcher(lex):
+    pass
