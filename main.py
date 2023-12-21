@@ -1,7 +1,7 @@
 from random import shuffle
 from password_utils import code_pswd, decode_pswd
 from back_up_utils import save_dict, back_up, restore
-from line_by_line_translation import scan, list_translate
+from line_by_line_translation import scan, list_translate, translate1, get_key
 
 
 def is_quit(promt=''):
