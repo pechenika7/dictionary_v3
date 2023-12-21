@@ -1,4 +1,4 @@
-cat;кошка
+cat;кот
 dog;собака
 pen;ручка
 door;дверь
@@ -11,3 +11,4 @@ apple;яблоко
 house;дом
 word1;слово
 word2;слово
+spoon;ложка

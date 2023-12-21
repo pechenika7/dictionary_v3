@@ -1,6 +1,7 @@
 from random import shuffle
 from password_utils import code_pswd, decode_pswd
 from back_up_utils import save_dict, back_up, restore
+from line_by_line_translation import scan
 
 
 def is_quit(promt=''):
@@ -203,13 +204,14 @@ def main_dict():
 
     while True:
         print('Please select command')
-        ch = input('q- quite work, l- list words, e- edit, t- test, d- translate, s- settings, b- backup, r- restore.\n').upper()
+        ch = input('q- quite work, l- list words, e- edit, t- test, d- translate, s- settings, b- backup, r- restore, x- file translation.\n').upper()
         if ch in {'Q', 'Й'}: break
         elif ch in {'L', 'Д'}: list_words()
         elif ch in {'E', 'У'}: edit(current_user)
         elif ch in {'T', 'Е'}: test()
         elif ch in {'D', 'В'}: translate()
         elif ch in {'S', 'Ы'}: edit_settings(current_user)
+        elif ch in {'X', 'Ч'}: print(scan())
         elif ch in {'B', 'И'}:
             res = back_up(current_user, user_dict, eng_rus)
             if res != -1:
