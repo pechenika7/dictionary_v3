@@ -137,9 +137,6 @@ def test():
                     gk = gk[0]
                 except:
                     gk = ''
-                print(quest)
-                print(answer)
-                print(gk)
                 if eng_rus.get(n) == quest or gk == quest:
                     print('You are right!')
                     succes +=1
