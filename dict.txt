@@ -15,3 +15,4 @@ spoon;ложка
 all;все
 jange;джунгли
 game;игра
+play;играть
