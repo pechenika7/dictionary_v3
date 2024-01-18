@@ -13,3 +13,5 @@ word1;слово
 word2;слово
 spoon;ложка
 all;все
+jange;джунгли
+game;игра
