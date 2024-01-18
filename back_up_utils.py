@@ -1,9 +1,9 @@
 from shutil import copy2
-def save_dict(eng_rus, path='dict.txt'):
-    cw = len(eng_rus) #cw - count words
+def save_dict(dict_, path='dict.txt'):
+    cw = len(dict_) #cw - count words
     f = open(path, 'w', encoding='utf8')
-    lk = list(eng_rus.keys()) #lk- list keys
-    lv = list(eng_rus.values()) #lv - list values
+    lk = list(dict_.keys()) #lk- list keys
+    lv = list(dict_.values()) #lv - list values
     for i in range(cw):
         temp = lk[i] + ';' + lv[i] + '\n'
         f.write(temp)
@@ -21,8 +21,8 @@ def back_up(user_, users_list, dict_):
         return -1
 
 
-def restore(current_user, user_dict):
-    if user_dict[2][current_user] == 2:
+def restore(user_, users_list):
+    if users_list[2][user_] == 2:
       print('Restore completed')
       copy2('dict.bak', 'dict.txt')
     else:

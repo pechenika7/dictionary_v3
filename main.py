@@ -13,7 +13,7 @@ def is_quit(promt=''):
     return res
 
 
-def edit_settings(current_user):
+def edit_settings(current_user, user_dict):
     if user_dict[2][current_user] in {1, 2}:
       pass
 
@@ -31,14 +31,17 @@ def list_words():
     print('Dictionary contains ', count_words, ' words, ', words_on_page, ' item on the page, current page is 1 of', pages)
     current = 1
     while True:
-        if (current == pages) and (reminder > 0):
-            t = reminder
+        if current <= pages and current > 0:
+            if (current == pages) and (reminder > 0):
+                t = reminder
+            else:
+                t = words_on_page
+            for i in range(t):
+                print(lk[words_on_page*(current-1)+i], '-', lv[words_on_page*(current-1)+i])
+            if pages == 1:
+                break
         else:
-            t = words_on_page
-        for i in range(t):
-            print(lk[words_on_page*(current-1)+i], '-', lv[words_on_page*(current-1)+i])
-        if pages == 1:
-            break
+            print('Page is too big')
         res = is_quit('Select page or type "q" for quit ')
         if (res[0]):
             break
@@ -79,7 +82,7 @@ def edit_word():
         save_dict(eng_rus)
 
 
-def edit(current_user):
+def edit(current_user, user_dict):
     if user_dict[2][current_user] == 2:
       print('Edit mod activ')
       back_up(current_user, user_dict, eng_rus)
@@ -148,7 +151,7 @@ def test():
             print('You result ' + str(succes) + '/' + str(summary))
 
 
-def main_dict():
+def main_dict(user_dict):
 
     def load_settings(path):
         wp = '5'
@@ -192,10 +195,10 @@ def main_dict():
         ch = input('q- quite work, l- list words, e- edit, t- test, d- translate, s- settings, b- backup, r- restore, x- file translation.\n').upper()
         if ch in {'Q', 'Й'}: break
         elif ch in {'L', 'Д'}: list_words()
-        elif ch in {'E', 'У'}: edit(current_user)
+        elif ch in {'E', 'У'}: edit(current_user,user_dict)
         elif ch in {'T', 'Е'}: test()
         elif ch in {'D', 'В'}: translate()
-        elif ch in {'S', 'Ы'}: edit_settings(current_user)
+        elif ch in {'S', 'Ы'}: edit_settings(current_user, user_dict)
         elif ch in {'X', 'Ч'}: print(list_translate(scan(), eng_rus))
         elif ch in {'B', 'И'}:
             res = back_up(current_user, user_dict, eng_rus)
@@ -209,7 +212,7 @@ def main_dict():
 def auth():
 
     def load_users():
-        global user_dict
+#        global user_dict
         current_user = 0
         user_dict = []
         user_file = open('users.data', 'r', encoding='utf8')
@@ -228,8 +231,9 @@ def auth():
         count_user = len(nick)
         user_file.close
         print(user_dict)
+        return user_dict
 
-    def sign_in():
+    def sign_in(user_dict):
         log = input('Please entre your nickname: ')
         paswd = input('Please entre your password: ')
         for u in user_dict[0]:
@@ -239,7 +243,7 @@ def auth():
                     return user_dict[0].index(u)
         return -1
 
-    def reg():
+    def reg(user_dict):
         nick = code_pswd(input('Please entre your nickname: '))
         pswd = code_pswd(input('Please entre your password: '))
         user_dict[0].append(nick)
@@ -255,19 +259,19 @@ def auth():
         print('Welcome guest!\nFor full access you have to registration.')
         return 0
 
-    load_users()
+    user_dict = load_users()
     print('Hello! I am program dictionary!')
     while True:
         print('Please select command')
         ch = input('s- sign in, r- registration, g- guest.\n').upper()
         if ch in {'Q', 'Й'}: break
         elif ch in {'S', 'Ы'}:
-            current_user = sign_in()
+            current_user = sign_in(user_dict)
             if current_user != -1:
                 break
             print('Incorrect login or password. Please try again ')
         elif ch in {'R', 'К'}:
-            current_user = reg()
+            current_user = reg(user_dict)
             print(current_user)
             break
         elif ch in {'G', 'П'}:
@@ -276,7 +280,7 @@ def auth():
         else:
             print('Wrong command! Repeat please.')
 
-    return current_user
+    return current_user, user_dict
 
-current_user = auth()
-main_dict()
+current_user, user_dict = auth()
+main_dict(user_dict)
