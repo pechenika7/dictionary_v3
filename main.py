@@ -18,9 +18,9 @@ def edit_settings(current_user, user_dict):
       pass
 
 
-def list_words():
-    lk = list(eng_rus.keys())  # lk- list keys
-    lv = list(eng_rus.values())  # lv - list values
+def list_words(dict, count_words, words_on_page):
+    lk = list(dict.keys())  # lk- list keys
+    lv = list(dict.values())  # lv - list values
     reminder = count_words % words_on_page
     pages = count_words // words_on_page
     if reminder > 0:
@@ -49,48 +49,48 @@ def list_words():
     return(current)
 
 
-def add_word():
+def add_word(dict):
     res = is_quit('Please type new couple of words or type "q" to quit: ')
     if res[0] == False:
         temp = res[1].split()
-        if eng_rus.get(temp[0]) == None:
-            eng_rus[temp[0]] = temp[1].strip()
-            save_dict(eng_rus)
+        if dict.get(temp[0]) == None:
+            dict[temp[0]] = temp[1].strip()
+            save_dict(dict)
         else:
             print('This word already in dictionary')
 
 
-def edit_word():
-    r = list_words()
+def edit_word(dict, count_words, words_on_page):
+    r = list_words(dict, count_words, words_on_page)
     res = is_quit('Please type wrong word or type "q" to quit: ')
     if res[0] == False:
-        temp = eng_rus.get(res[1])
+        temp = dict.get(res[1])
         if temp == None:
-            k = get_key(eng_rus,res[1])
+            k = get_key(dict,res[1])
             if k!= []:
                 if len(k) == 1:
-                    eng_rus[k[0]] = input('Please type correct variant: ')
+                    dict[k[0]] = input('Please type correct variant: ')
                 else:
                     print(k, '\n', 'According to your request find', len(k), 'words')
                     req = int(input('Please type word number'))
-                    eng_rus[k[req-1]] = input('Please type correct variant: ')
+                    dict[k[req-1]] = input('Please type correct variant: ')
             else:
                     print('Word not found')
         else:
-            eng_rus[input('Please type correct variant: ')] = eng_rus.pop(res[1])
-        print(eng_rus)
-        save_dict(eng_rus)
+            dict[input('Please type correct variant: ')] = dict.pop(res[1])
+        print(dict)
+        save_dict(dict)
 
 
-def edit(current_user, user_dict):
+def edit(dict, current_user, user_dict, count_words, words_on_page):
     if user_dict[2][current_user] == 2:
       print('Edit mod activ')
-      back_up(current_user, user_dict, eng_rus)
+      back_up(current_user, user_dict, dict)
       while True:
           ch = input('Choose edit mod: a- add word, e- edit word, q- quit: ')
           print(ch)
-          if ch in {'a', 'A', 'ф', 'Ф'}: add_word()
-          elif ch in {'e', 'E', 'у', 'У'}: edit_word()
+          if ch in {'a', 'A', 'ф', 'Ф'}: add_word(dict)
+          elif ch in {'e', 'E', 'у', 'У'}: edit_word(dict, count_words, words_on_page)
           elif ch in {'q', 'Q', 'й', 'Й'}: break
           else:
               print('Wrong command! Repeat please.')
@@ -98,22 +98,22 @@ def edit(current_user, user_dict):
       print("Access denied- you don't have permission.")
 
 
-def translate():
+def translate(dict):
     query = input('Please type your word ').lower()
-    print(translate1(query, eng_rus))
+    print(translate1(query, dict))
 
 
-def test():
-    def get_translate(dict, word):
-        try:
-            temp = dict[word]
-        except:
-            temp = get_key(dict, word)
-            if temp == []:
-                temp = ''
-            else:
-                temp = temp[0]
-        return(temp)
+def test(eng_rus):
+    # def get_translate(dict, word):
+    #     try:
+    #         temp = dict[word]
+    #     except:
+    #         temp = get_key(dict, word)
+    #         if temp == []:
+    #             temp = ''
+    #         else:
+    #             temp = temp[0]
+    #     return(temp)
 
     if eng_rus == [[], []]:
         print('Sorry. Dictionary is empty.')
@@ -131,7 +131,8 @@ def test():
             for n in list_:
                 summary += 1
                 quest = input('Please translate '+n+' ') #ввод слова
-                answer = get_translate(eng_rus, quest) #перевод слова
+                # answer = get_translate(eng_rus, quest) #перевод слова
+                answer = translate1(quest, eng_rus)
                 try:
                     gk = get_key(eng_rus,n)
                     gk = gk[0]
@@ -141,7 +142,7 @@ def test():
                     print('You are right!')
                     succes +=1
                 else:
-                  print('No, you are wrong.')
+                    print('No, you are wrong. Correct variant is ' + answer)
                 res = is_quit('Would you like to finish press "q", otherwise press any key: ')
                 if res[0]:
                     break
@@ -167,9 +168,6 @@ def main_dict(user_dict):
         return wp
 
 
-    global eng_rus
-    global count_words
-    global words_on_page
     words_on_page = load_settings('settings.txt')
 
 
@@ -191,10 +189,10 @@ def main_dict(user_dict):
         print('Please select command')
         ch = input('q- quite work, l- list words, e- edit, t- test, d- translate, s- settings, b- backup, r- restore, x- file translation.\n').upper()
         if ch in {'Q', 'Й'}: break
-        elif ch in {'L', 'Д'}: list_words()
-        elif ch in {'E', 'У'}: edit(current_user,user_dict)
-        elif ch in {'T', 'Е'}: test()
-        elif ch in {'D', 'В'}: translate()
+        elif ch in {'L', 'Д'}: list_words(eng_rus, count_words, words_on_page)
+        elif ch in {'E', 'У'}: edit(eng_rus, current_user, user_dict, count_words, words_on_page)
+        elif ch in {'T', 'Е'}: test(eng_rus)
+        elif ch in {'D', 'В'}: translate(eng_rus)
         elif ch in {'S', 'Ы'}: edit_settings(current_user, user_dict)
         elif ch in {'X', 'Ч'}: print(list_translate(scan(), eng_rus))
         elif ch in {'B', 'И'}:
