@@ -128,10 +128,13 @@ def test(eng_rus):
                     gk = ''
                 if eng_rus.get(n) == quest or gk == quest:
                     print('You are right!')
-                    succes +=1
+                    succes += 1
                 else:
                     if type(answer) == list:
-                        answer = answer[0]
+                        res_ans = ''
+                        for i in answer:
+                            res_ans += '{'+i+'}'
+                        answer =res_ans
                     print('No, you are wrong. Correct variant is ' + answer)
                 res = is_quit('Would you like to finish press "q", otherwise press any key: ')
                 if res[0]:
