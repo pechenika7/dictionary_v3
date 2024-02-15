@@ -1,7 +1,7 @@
 from random import shuffle
 from password_utils import code_pswd, decode_pswd
 from back_up_utils import save_dict, back_up, restore
-from line_by_line_translation import scan, list_translate, translate1, get_key
+from line_by_line_translation import scan, list_translate, get_translate, get_key
 
 
 def is_quit(promt=''):
@@ -100,21 +100,10 @@ def edit(dict, current_user, user_dict, count_words, words_on_page):
 
 def translate(dict):
     query = input('Please type your word ').lower()
-    print(translate1(query, dict))
+    print(get_translate(dict, query))
 
 
 def test(eng_rus):
-    # def get_translate(dict, word):
-    #     try:
-    #         temp = dict[word]
-    #     except:
-    #         temp = get_key(dict, word)
-    #         if temp == []:
-    #             temp = ''
-    #         else:
-    #             temp = temp[0]
-    #     return(temp)
-
     if eng_rus == [[], []]:
         print('Sorry. Dictionary is empty.')
     else:
@@ -131,8 +120,7 @@ def test(eng_rus):
             for n in list_:
                 summary += 1
                 quest = input('Please translate '+n+' ') #ввод слова
-                # answer = get_translate(eng_rus, quest) #перевод слова
-                answer = translate1(quest, eng_rus)
+                answer = get_translate(eng_rus, n)#перевод слова
                 try:
                     gk = get_key(eng_rus,n)
                     gk = gk[0]
@@ -142,6 +130,8 @@ def test(eng_rus):
                     print('You are right!')
                     succes +=1
                 else:
+                    if type(answer) == list:
+                        answer = answer[0]
                     print('No, you are wrong. Correct variant is ' + answer)
                 res = is_quit('Would you like to finish press "q", otherwise press any key: ')
                 if res[0]:
@@ -194,7 +184,7 @@ def main_dict(user_dict):
         elif ch in {'T', 'Е'}: test(eng_rus)
         elif ch in {'D', 'В'}: translate(eng_rus)
         elif ch in {'S', 'Ы'}: edit_settings(current_user, user_dict)
-        elif ch in {'X', 'Ч'}: print(list_translate(scan(), eng_rus))
+        elif ch in {'X', 'Ч'}: print(list_translate(eng_rus, scan()))
         elif ch in {'B', 'И'}:
             res = back_up(current_user, user_dict, eng_rus)
             if res != -1:
