@@ -6,11 +6,11 @@ def get_key(dict, value):
     return k_list
 
 
-def translate1(query, eng_rus):
+def get_translate(dict, query):
     try:
-        return(eng_rus[query])
+        return(dict[query])
     except:
-        k_list = get_key(eng_rus, query)
+        k_list = get_key(dict, query)
         if k_list == []:
             return 'Word not found'
         else:
@@ -28,8 +28,8 @@ def scan():
     return list_1
 
 
-def list_translate(list_1, eng_rus):
+def list_translate(dict, list_1):
     list_2 = list()
     for i in list_1:
-        list_2.append(translate1(i, eng_rus))
+        list_2.append(get_translate(dict, i))
     return list_2
