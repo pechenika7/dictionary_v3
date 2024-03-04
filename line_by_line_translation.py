@@ -18,18 +18,8 @@ def get_translate(dict, query):
 
 
 def scan():
-    list_1 = list()
-    f = open('D:\python lesson\dictionary_v3\storage\proverb.txt', 'r', encoding='utf8')
-    while True:
-        line_ = f.readline()
-        if line_ == '' or line_ == '\n':
-            break
-        list_1.extend(line_.split())
-    return list_1
+    pass
 
 
-def list_translate(dict, list_1):
-    list_2 = list()
-    for i in list_1:
-        list_2.append(get_translate(dict, i))
-    return list_2
+def list_translate():
+    pass

@@ -188,7 +188,7 @@ def main_dict(user_dict):
         elif ch in {'T', 'Е'}: test(eng_rus)
         elif ch in {'D', 'В'}: translate(eng_rus)
         elif ch in {'S', 'Ы'}: edit_settings(current_user, user_dict)
-        elif ch in {'X', 'Ч'}: print(list_translate(eng_rus, scan()))
+        elif ch in {'X', 'Ч'}: print('function in developing')
         elif ch in {'B', 'И'}:
             res = back_up(current_user, user_dict, eng_rus)
             if res != -1:
