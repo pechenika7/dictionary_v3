@@ -107,3 +107,4 @@ ant;муравей
 spider;паук
 key;ключ
 butter;маслы
+triangle;триугольник

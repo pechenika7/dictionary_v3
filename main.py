@@ -1,7 +1,8 @@
 from random import shuffle
-from password_utils import code_pswd, decode_pswd
+from password_utils import code_pswd, decode_pswd, check_role
 from back_up_utils import save_dict, back_up, restore
 from line_by_line_translation import scan, list_translate, get_translate, get_key
+
 
 
 def is_quit(promt=''):
@@ -14,7 +15,7 @@ def is_quit(promt=''):
 
 
 def edit_settings(current_user, user_dict):
-    if user_dict[2][current_user] in {1, 2}:
+    if check_role(user_dict, current_user, 'admin') or check_role(user_dict, current_user, 'user'):
       pass
 
 
@@ -83,7 +84,7 @@ def edit_word(dict, count_words, words_on_page):
 
 
 def edit(dict, current_user, user_dict, count_words, words_on_page):
-    if user_dict[2][current_user] == 2:
+    if check_role(user_dict, current_user, 'admin'):
       print('Edit mod activ')
       back_up(current_user, user_dict, dict)
       while True:
@@ -98,35 +99,35 @@ def edit(dict, current_user, user_dict, count_words, words_on_page):
       print("Access denied- you don't have permission.")
 
 
-def translate(dict):
+def translate(dict_):
     query = input('Please type your word ').lower()
-    print(get_translate(dict, query))
+    print(get_translate(dict_, query))
 
 
-def test(eng_rus):
-    if eng_rus == [[], []]:
+def test(dict_):
+    if dict_ == [[], []]:
         print('Sorry. Dictionary is empty.')
     else:
         res = is_quit("Hello, I am program testing. Please select test mod. If you want to translate words from English to Russian then press 'e', otherwise press 'r' or press 'q' to quit: ")
         if res[0] == False:
             if res[1] in ['e', 'у', '1']:
-                list_ = list(eng_rus.keys())
+                list_ = list(dict_.keys())
                 shuffle(list_)
             else:
-                list_ = list(eng_rus.values())
+                list_ = list(dict_.values())
                 shuffle(list_)
             summary = 0
             succes = 0
             for n in list_:
                 summary += 1
                 quest = input('Please translate '+n+' ') #ввод слова
-                answer = get_translate(eng_rus, n)#перевод слова
+                answer = get_translate(dict_, n)#перевод слова
                 try:
-                    gk = get_key(eng_rus,n)
+                    gk = get_key(dict_,n)
                     gk = gk[0]
                 except:
                     gk = ''
-                if eng_rus.get(n) == quest or gk == quest:
+                if dict_.get(n) == quest or gk == quest:
                     print('You are right!')
                     succes += 1
                 else:
@@ -151,13 +152,13 @@ def main_dict(user_dict):
             try:
                 wp = int(f.readline())
             except:
-                f.close
+                f.close()
                 f = open(path, 'w', encoding='utf8')
                 f.write(wp)
         except:
             f = open(path, 'w', encoding='utf8')
             f.write(wp)
-        f.close
+        f.close()
         return wp
 
 
@@ -200,9 +201,7 @@ def main_dict(user_dict):
 def auth():
 
     def load_users():
-#        global user_dict
-        current_user = 0
-        user_dict = []
+        ud = []
         user_file = open('users.data', 'r', encoding='utf8')
         nick = []
         password = []
@@ -215,11 +214,10 @@ def auth():
             nick.append(decode_pswd(temp_list[0]))
             password.append(decode_pswd(temp_list[1]))
             role.append(int(temp_list[2].strip()))
-        user_dict = [nick, password, role]
-        count_user = len(nick)
-        user_file.close
-        print(user_dict)
-        return user_dict
+        ud = [nick, password, role]
+        user_file.close()
+        print(ud)
+        return ud
 
     def sign_in(user_dict):
         log = input('Please entre your nickname: ')
@@ -240,7 +238,7 @@ def auth():
         user_file = open('users.data', 'a', encoding='utf8')
         item = ('\n' + nick + ';' + pswd + ';' + '1')
         user_file.write(item)
-        user_file.close
+        user_file.close()
         return len(user_dict[0]) - 1
 
     def guest():
@@ -248,6 +246,7 @@ def auth():
         return 0
 
     user_dict = load_users()
+    current_user = 0
     print('Hello! I am program dictionary!')
     while True:
         print('Please select command')

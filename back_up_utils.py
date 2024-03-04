@@ -1,4 +1,5 @@
 from shutil import copy2
+from password_utils import check_role
 def save_dict(dict_, path='dict.txt'):
     cw = len(dict_) #cw - count words
     f = open(path, 'w', encoding='utf8')
@@ -12,7 +13,7 @@ def save_dict(dict_, path='dict.txt'):
 
 
 def back_up(user_, users_list, dict_):
-    if users_list[2][user_] == 2:
+    if check_role(users_list, user_, 'admin'):
         cw = save_dict(dict_, 'dict.bak')
         print('Success')
         return cw
@@ -22,7 +23,7 @@ def back_up(user_, users_list, dict_):
 
 
 def restore(user_, users_list):
-    if users_list[2][user_] == 2:
+    if check_role(users_list, user_, 'admin'):
       print('Restore completed')
       copy2('dict.bak', 'dict.txt')
     else:
