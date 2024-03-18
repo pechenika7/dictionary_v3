@@ -107,7 +107,7 @@ def translate(dict_):
 
 
 def test(dict_):
-    if dict_ == [[], []]:
+    if len(dict_) == 0:
         print('Sorry. Dictionary is empty.')
     else:
         res = is_quit("Hello, I am program testing. Please select test mod. If you want to translate words from English to Russian then press 'e', otherwise press 'r' or press 'q' to quit: ")
@@ -164,7 +164,7 @@ def main_dict(list_user):
         return wp
 
     words_on_page = load_settings('settings.txt')
-    dict_file = open('dict.txt',  'r', encoding='utf8')
+    dict_file = open('empty.txt',  'r', encoding='utf8')
     eng_rus = {}
     while True:
         item = dict_file.readline()
