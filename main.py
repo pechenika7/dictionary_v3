@@ -174,8 +174,7 @@ def main_dict(list_user):
 
     def my_alpha_rus(word_):
         rus_char = 'абвгдеёжзийклмнопрстуфхцчшщъыьэюя_'
-        word1 = word_[0:len(word_)-1]
-        for ch in word1.lower():
+        for ch in word_.lower():
             if ch not in rus_char:
                 return False
         return True
@@ -189,6 +188,7 @@ def main_dict(list_user):
         if item == '' or item == '\n':
             break
         temp_list = item.split(';')
+        temp_list[1] = temp_list[1].strip('\n')
         if my_alpha_eng(temp_list[0]) and my_alpha_rus(temp_list[1]):
             eng_rus[temp_list[0]] = temp_list[1].strip()
         else:
