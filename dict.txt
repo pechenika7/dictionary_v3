@@ -16,12 +16,12 @@ jungle;джунгли
 kitten;котенок
 puppy;щенок
 hamster;хомяк
-fancy rat;декоративная крыса
+rat;крыса
 ferret;хорек
 mouse;мышь
 rabbit;кролик
 canary;канарейка
-goldfish;золотая рыбка
+goldfish;золотая_рыбка
 lizard;ящерица
 cow;корова
 hedgehog;еж
@@ -40,8 +40,8 @@ wolf;волк
 bear;медведь
 deer;олень
 moose;лось
-wild boar;кабан
-bat;летучая мышь
+wild_boar;кабан
+bat;летучая_мышь
 frog;лягушка
 toad;жаба
 whale;кит

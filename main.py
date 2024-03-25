@@ -163,15 +163,37 @@ def main_dict(list_user):
         f.close()
         return wp
 
+
+    def my_alpha_eng(word_):
+        eng_char = 'abcdefghijklmnopqrstuvwxyz_'
+        for ch in word_.lower():
+            if ch not in eng_char:
+                return False
+        return True
+
+
+    def my_alpha_rus(word_):
+        rus_char = 'абвгдеёжзийклмнопрстуфхцчшщъыьэюя_'
+        word1 = word_[0:len(word_)-1]
+        for ch in word1.lower():
+            if ch not in rus_char:
+                return False
+        return True
+
+
     words_on_page = load_settings('settings.txt')
-    dict_file = open('empty.txt',  'r', encoding='utf8')
-    eng_rus = {}
+    dict_file = open('dict.txt',  'r', encoding='utf8')
+    eng_rus = dict()
     while True:
         item = dict_file.readline()
         if item == '' or item == '\n':
             break
         temp_list = item.split(';')
-        eng_rus[temp_list[0]] = temp_list[1].strip()
+        if my_alpha_eng(temp_list[0]) and my_alpha_rus(temp_list[1]):
+            eng_rus[temp_list[0]] = temp_list[1].strip()
+        else:
+            print('input file error',temp_list[0],temp_list[1])
+            exit()
     count_words = len(eng_rus)
     dict_file.close()
     print(eng_rus)
