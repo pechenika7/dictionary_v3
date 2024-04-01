@@ -13,6 +13,47 @@ def is_quit(promt: str = '') -> list:
     return res
 
 
+def is_alphaEng(word_):
+    eng_char = 'abcdefghijklmnopqrstuvwxyz_'
+    for ch in word_.lower():
+        if ch not in eng_char:
+            return False
+    return True
+
+
+def is_alphaRus(word_):
+    rus_char = 'абвгдеёжзийклмнопрстуфхцчшщъыьэюя_'
+    for ch in word_.lower():
+        if ch not in rus_char:
+            return False
+    return True
+
+
+def is_nickname(word_):
+    nick_char = 'abcdefghijklmnopqrstuvwxyz_!?-.0123456789'
+    if word_[0].isdigit():
+        return False
+    for ch in word_.lower():
+        if ch not in nick_char:
+            return False
+    if (len(word_) >= 3) and (len(word_) <= 20):
+        return True
+    else:
+        return False
+
+
+
+def is_password(word_):
+    password_char = 'abcdefghijklmnopqrstuvwxyz_!?-.,#&*+0123456789'
+    for ch in word_.lower():
+        if ch not in password_char:
+            return False
+    if (len(word_) >= 4) and (len(word_) <= 20):
+        return True
+    else:
+        return False
+
+
 def edit_settings(user_, list_user):
     if check_role(list_user, user_, 'admin') or check_role(list_user, user_, 'user'):
         pass
@@ -164,22 +205,6 @@ def main_dict(list_user):
         return wp
 
 
-    def my_alpha_eng(word_):
-        eng_char = 'abcdefghijklmnopqrstuvwxyz_'
-        for ch in word_.lower():
-            if ch not in eng_char:
-                return False
-        return True
-
-
-    def my_alpha_rus(word_):
-        rus_char = 'абвгдеёжзийклмнопрстуфхцчшщъыьэюя_'
-        for ch in word_.lower():
-            if ch not in rus_char:
-                return False
-        return True
-
-
     words_on_page = load_settings('settings.txt')
     dict_file = open('dict.txt',  'r', encoding='utf8')
     eng_rus = dict()
@@ -189,7 +214,7 @@ def main_dict(list_user):
             break
         temp_list = item.split(';')
         temp_list[1] = temp_list[1].strip('\n')
-        if my_alpha_eng(temp_list[0]) and my_alpha_rus(temp_list[1]):
+        if is_alphaEng(temp_list[0]) and is_alphaRus(temp_list[1]):
             eng_rus[temp_list[0]] = temp_list[1].strip()
         else:
             print('input file error',temp_list[0],temp_list[1])
@@ -270,8 +295,24 @@ def auth():
         return -1
 
     def reg(user_dict):
-        nick = code_pswd(input('Please entre your nickname: '))
-        pswd = code_pswd(input('Please entre your password: '))
+        while True:
+            # nick = code_pswd(input('Please entre your nickname: '))
+            nick = input('Please entre your nickname: ')
+            if is_nickname(nick):
+                break
+            else:
+                temp = input('Forbidden symbol or too small/big length or nickname must not start with digit. Pls try again. If you want to quit then print "q"').lower()
+                if temp in {'q', 'й'}:
+                    exit()
+        while True:
+            # pswd = code_pswd(input('Please entre your password: '))
+            pswd = input('Please entre your password: ')
+            if is_password(pswd):
+                break
+            else:
+                temp = input('Forbidden symbol or too small/big length. Pls try again. If you want to quit then print "q"').lower()
+                if temp in {'q', 'й'}:
+                    exit()
         user_dict[0].append(nick)
         user_dict[1].append(pswd)
         user_dict[2].append(1)
