@@ -313,6 +313,8 @@ def auth():
                 temp = input('Forbidden symbol or too small/big length. Pls try again. If you want to quit then print "q"').lower()
                 if temp in {'q', 'й'}:
                     exit()
+        nick = code_pswd(nick)
+        pswd = code_pswd(pswd)
         user_dict[0].append(nick)
         user_dict[1].append(pswd)
         user_dict[2].append(1)
