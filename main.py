@@ -1,3 +1,4 @@
+from time import time
 from random import shuffle
 from password_utils import code_pswd, decode_pswd, check_role
 from back_up_utils import save_dict, back_up, restore
@@ -188,6 +189,7 @@ def test(dict_):
 
 def main_dict(list_user):
 
+    time1 = time()
     def load_settings(path):
         wp = '5'
         try:
@@ -223,6 +225,8 @@ def main_dict(list_user):
     dict_file.close()
     print(eng_rus)
 
+    time2 = time()
+    print('Loading time is:', time2 - time1)
     while True:
         print('Please select command')
         ch = input('q- quite work, l- list words, e- edit, t- test, d- translate, s- settings, b- backup, r- restore, x- file translation.\n').upper()
