@@ -162,16 +162,20 @@ def test(dict_):
                 shuffle(list_)
             summary = 0
             success = 0
+            time_limit = 30
             for n in list_:
+                time1 = time()
                 summary += 1
                 quest = input('Please translate '+n+' ')  # ввод слова
                 answer = get_translate(dict_, n)  # перевод слова
-                try:
-                    gk = get_key(dict_, n)
-                    gk = gk[0]
-                except ValueError:
-                    gk = ''
-                if dict_.get(n) == quest or gk == quest:
+                # gk = get_key(dict_, n)
+                # try:
+                #     print(gk)
+                #     gk = gk[0]
+                # except ValueError:
+                #     gk = ''
+                # if dict_.get(n) == quest or gk == quest:
+                if quest == answer:
                     print('You are right!')
                     success += 1
                 else:
@@ -181,6 +185,12 @@ def test(dict_):
                             res_ans += '{'+i+'}'
                         answer = res_ans
                     print('No, you are wrong. Correct variant is ' + answer)
+                time2 = time()
+                time_spend = time2-time1
+                if time_spend> time_limit:
+                    print('You spend too much time for answer')
+                else:
+                    print('You spend:', time_spend)
                 res = is_quit('Would you like to finish press "q", otherwise press any key: ')
                 if res[0]:
                     break
